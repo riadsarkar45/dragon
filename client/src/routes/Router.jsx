@@ -4,6 +4,8 @@ import Root from '../Root/Root';
 import Dashboard from "../pages/Dashboard";
 import AddNewOrder from "../pages/AddNewOrder";
 import AllDyeingOrders from "../pages/AllDyeingOrders";
+import RawReport from "../pages/RawReport";
+import Profile from "../pages/Profile";
 const Router = createBrowserRouter(
     [
         {
@@ -23,6 +25,14 @@ const Router = createBrowserRouter(
                     path: '/allorders',
                     element: <AllDyeingOrders />
                 },
+                {
+                    path: '/rawreport',
+                    element: <RawReport />
+                },
+                {
+                    path: '/profile',
+                    element: <Profile />
+                }
             ]
         }
     ]
