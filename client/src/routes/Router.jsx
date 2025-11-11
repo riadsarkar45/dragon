@@ -6,6 +6,7 @@ import AddNewOrder from "../pages/AddNewOrder";
 import AllDyeingOrders from "../pages/AllDyeingOrders";
 import RawReport from "../pages/RawReport";
 import Profile from "../pages/Profile";
+import Login from "../pages/Login";
 const Router = createBrowserRouter(
     [
         {
@@ -34,6 +35,10 @@ const Router = createBrowserRouter(
                     element: <Profile />
                 }
             ]
+        },
+        {
+            path: "/login",
+            element: <Login />
         }
     ]
 )
