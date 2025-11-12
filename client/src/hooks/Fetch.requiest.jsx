@@ -1,26 +1,24 @@
-import { useCallback } from "react";
-import useAxiosPublic from "./Axios";
+import { useCallback } from 'react';
+import useAxiosPublic from './Axios';
 
 const useFetchRequest = () => {
   const axiosPublic = useAxiosPublic();
 
-  return useCallback(
-    async (url) => {
-      if (!url) {
-        console.warn("Url is missing…");
-        return;
-      }
+  const get = useCallback(async (url, options = {}) => {
+    if (!url) {
+      throw new Error('URL is required');
+    }
+    
+    try {
+      const response = await axiosPublic.get(url, options);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching ${url}:`, error);
+      throw error;
+    }
+  }, [axiosPublic]);
 
-      try {
-        const response = await axiosPublic.get(url);
-        return response.data;
-      } catch (e) {
-        console.error(e);
-        throw e;
-      }
-    },
-    [axiosPublic]
-  );
+  return { get };
 };
 
 export default useFetchRequest;

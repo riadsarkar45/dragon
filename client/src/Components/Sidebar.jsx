@@ -18,6 +18,9 @@ const Sidebar = () => {
           <Link to='/neworder'><h2>Raw Report</h2></Link>
         </div>
         <div className="p-2 text-[1.2rem] border rounded-md hover:bg-blue-500 hover:bg-opacity-10 mb-3">
+          <Link to='/newshipped'><h2>Add New Shipped Yarns</h2></Link>
+        </div>
+        <div className="p-2 text-[1.2rem] border rounded-md hover:bg-blue-500 hover:bg-opacity-10 mb-3">
           <Link to='/login'><h2>Login</h2></Link>
         </div>
       </div>

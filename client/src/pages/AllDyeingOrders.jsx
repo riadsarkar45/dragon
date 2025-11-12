@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import Header from "../Components/Reusable/Header";
+import useFetchRequest from "../hooks/Fetch.requiest";
 
 const AllDyeingOrders = () => {
+    const { get } = useFetchRequest();
+    useEffect(() => {
+        
+    }, [])
     return (
         <div>
             <Header typeOfHeader={'All Dyeing Orders'} />

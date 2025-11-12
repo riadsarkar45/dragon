@@ -58,7 +58,7 @@ const AddNewOrder = () => {
 
                     <div className="grid">
                         <small>Colors</small>
-                        <input name="colors" className="w-[99%] p-3 outline-none border rounded-md mt-1" type="text" placeholder="Colors" />
+                        <input name="colors" className="w-[99%] p-3 outline-none border rounded-md mt-1" type="text" placeholder="Use coma to add multiple colors" />
                     </div>
                 </div>
                 <div className="grid grid-cols-2  ml-3 mt-4 gap-2">

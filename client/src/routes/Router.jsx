@@ -7,6 +7,7 @@ import AllDyeingOrders from "../pages/AllDyeingOrders";
 import RawReport from "../pages/RawReport";
 import Profile from "../pages/Profile";
 import Login from "../pages/Login";
+import NewYarnShipped from "../pages/NewYarnShipped";
 const Router = createBrowserRouter(
     [
         {
@@ -33,6 +34,10 @@ const Router = createBrowserRouter(
                 {
                     path: '/profile',
                     element: <Profile />
+                },
+                {
+                    path: '/newshipped',
+                    element: <NewYarnShipped />
                 }
             ]
         },
