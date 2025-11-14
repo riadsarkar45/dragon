@@ -42,7 +42,7 @@ const Sidebar = () => {
 
       {/* Footer (fixed at bottom) */}
       <div className="p-4 border-t border-gray-300 text-sm text-gray-500">
-        &copy; 2025 SOUTH DRAGON
+        &copy; 2025 Riad Sarkar
       </div>
     </div>
   );
