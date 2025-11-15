@@ -11,6 +11,10 @@ const AllDyeingOrders = () => {
 
     if (!fetchedData) return;
 
+    const handleChallanImageUpload = (orderId) => {
+        
+    }
+
     console.log(fetchedData.dyeingOrders);
     return (
         <div className="mt-10">
@@ -24,17 +28,19 @@ const AllDyeingOrders = () => {
                                 <span className="bg-blue-500 p-2  bg-opacity-20 text-blue-500 border-blue-500 uppercase">Section: {order.dyeingSection}</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="bg-blue-500 p-2  bg-opacity-20 text-blue-500 border-blue-500 uppercase">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={2}
-                                        stroke="currentColor"
-                                        className="w-6 h-6"
-                                    >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                                    </svg>
+                                <span>
+                                    <button className="bg-blue-500 p-1  bg-opacity-20 text-blue-500 border-blue-500 uppercase rounded-md">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={2}
+                                            stroke="currentColor"
+                                            className="w-6 h-6"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                                        </svg>
+                                    </button>
 
                                 </span>
                                 <span className="bg-blue-500 p-2  bg-opacity-20 text-blue-500 border-blue-500 uppercase">
@@ -92,13 +98,12 @@ const AllDyeingOrders = () => {
                             }
                         </div>
 
-                        {/* <div className="flex mt-3">
-                            <input className="p-2 outline-none border border-r-0 rounded-l-md w-[25rem]" type="text" placeholder="Received Color Names" />
-                            <button className="p-2 border rounded-r-lg">Save</button>
-                        </div> */}
+                       
                     </div>
                 )
             }
+
+
 
         </div>
     );
