@@ -18,9 +18,8 @@ const AllDyeingOrders = () => {
     }, [get])
 
     if (!fetchedData) return;
-
+    console.log(fetchedData);
     const handleChallanImageUpload = (orderId) => {
-        console.log(orderId);
         setOrderNumber(orderId);
     }
 
@@ -94,6 +93,35 @@ const AllDyeingOrders = () => {
                                     <div className="flex gap-2">
                                         <h2 className="bg-blue-500 p-2 bg-opacity-20 text-blue-500 border-blue-500 uppercase">{order.orderNo}</h2>
                                         <span className="bg-blue-500 p-2  bg-opacity-20 text-blue-500 border-blue-500 uppercase">Section: {order.dyeingSection}</span>
+                                        <label
+                                            htmlFor="multiImageInput"
+                                            onDrop={handleDrop}
+                                            onDragOver={handleDragOver}
+                                            className="flex flex-col items-center justify-center gap-2
+                p-1 border-2 border-dashed rounded-xl cursor-pointer
+                border-blue-400 bg-blue-50 hover:bg-blue-100 text-center transition"
+                                        >
+                                            <span className="text-blue-700 font-medium">Upload Challans</span>
+                                        </label>
+
+                                        <input
+                                            id="multiImageInput"
+                                            type="file"
+                                            multiple
+                                            accept="image/*"
+                                            className="hidden mb-10"
+                                            onChange={handleFileChange}
+                                        />
+                                        <div>
+                                            {images.length > 0 && (
+                                                <button
+                                                    onClick={uploadImages}
+                                                    className=" bg-blue-600 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-700 transition"
+                                                >
+                                                    Upload
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <span>
@@ -127,68 +155,54 @@ const AllDyeingOrders = () => {
 
 
                                         </span>
+
+
+
+
+
+
+
+
                                     </div>
                                 </div>
 
 
                                 {
                                     orderNumber === order.orderNo ? (
-                                        <div className="w-full max-w-md mx-auto">
-                                            {/* Drop Zone */}
-                                            <label
-                                                htmlFor="multiImageInput"
-                                                onDrop={handleDrop}
-                                                onDragOver={handleDragOver}
-                                                className="flex flex-col mt-3 items-center justify-center gap-3
-                   p-6 border-2 border-dashed rounded-xl cursor-pointer
-                   border-blue-400 bg-blue-50 hover:bg-blue-100
-                   transition duration-200"
-                                            >
-                                                <span className="text-blue-700 font-medium">Click or Drag Images Here</span>
-                                            </label>
+                                        <div className="w-full items-start mt-3 justify-between">
 
-                                            {/* Hidden Input */}
-                                            <input
-                                                id="multiImageInput"
-                                                type="file"
-                                                multiple
-                                                accept="image/*"
-                                                className="hidden"
-                                                onChange={handleFileChange}
-                                            />
+                                            <div className="flex-1">
+                                                <p className="text-lg font-medium border-b p-2 mb-3">Uploaded challans</p>
 
-                                            {/* Preview Grid */}
-                                            {
-                                                orderNumber === order.orderNo && (
-                                                    images.length > 0 && (
-                                                        <div className="mt-4 grid grid-cols-3 gap-3">
-                                                            {images.map((img, index) => (
-                                                                <div key={index} className="relative w-full h-24 rounded-md overflow-hidden border">
-                                                                    <img
-                                                                        src={img.preview}
-                                                                        alt=""
-                                                                        className="w-full h-full object-cover"
-                                                                    />
-
-                                                                </div>
-                                                            ))}
+                                                <div className="flex flex-wrap  gap-3">
+                                                    {order.challans.map((challan, i) => (
+                                                        <div key={i}>
+                                                            <img
+                                                                src={challan.challanImage}
+                                                                alt=""
+                                                                className="w-[10rem] bg-gray-500 bg-opacity-20 rounded-md p-2 h-[10rem] object-cover"
+                                                            />
                                                         </div>
-                                                    )
-                                                )
-                                            }
+                                                    ))}
+                                                </div>
+                                            </div>
 
-                                            {/* Upload Button */}
-                                            {images.length > 0 && (
-                                                <button
-                                                    onClick={uploadImages}
-                                                    className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg shadow hover:bg-blue-700 transition"
-                                                >
-                                                    Upload Images
-                                                </button>
-                                            )}
 
+                                            <div className="flex flex-col items-end w-56">
+
+
+
+
+
+
+
+                                            </div>
 
                                         </div>
+
+
+
+
                                     ) : <div className="border-b text-xl">
                                         <div className="flex border-b mb-2">
                                             <h2 className=" w-[20rem] mt-3 mb-3 uppercase p-1">Marketing Name: {order.marketingName}</h2>
