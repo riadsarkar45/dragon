@@ -7,6 +7,7 @@ import usePostRequest from "../hooks/Post.request";
 const AllDyeingOrders = () => {
     const { get, fetchedData } = useFetchRequest();
     const [orderNumber, setOrderNumber] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [images, setImages] = useState([]);
     const useAxios = useAxiosPublic();
     const { makePutRequest } = usePostRequest();
@@ -37,6 +38,8 @@ const AllDyeingOrders = () => {
 
     const handleFileChange = (e) => {
         handleFiles(e.target.files);
+        setOrderNumber(orderNumber);
+        console.log(orderNumber);
     };
 
     const handleDrop = (e) => {
@@ -49,10 +52,11 @@ const AllDyeingOrders = () => {
     };
 
 
-    const uploadImages = async () => {
+    const uploadImages = async (orderNumber) => {
+        setIsLoading(true);
         try {
             const urls = [];
-
+            console.log(orderNumber);
             for (let i = 0; i < images.length; i++) {
                 const formData = new FormData();
                 formData.append("images", images[i].file);
@@ -64,14 +68,17 @@ const AllDyeingOrders = () => {
             console.log("All uploaded URLs:", urls);
 
             // Now send all URLs to your backend
-            const insertChallan = await makePutRequest(
-                `/dyeing-order/challan/${orderNumber}`,
-                { challanImages: urls }
-            );
+            const insertChallan = await makePutRequest(`/dyeing-order/challan/${orderNumber}`,{ challanImages: urls });
+
+            if(insertChallan && insertChallan.success){
+                setIsLoading(false);
+                setImages([]);
+            }
 
             console.log("Backend response:", insertChallan);
         } catch (err) {
             console.error("Upload or insert failed:", err);
+            setIsLoading(false);
         }
     };
 
@@ -101,24 +108,31 @@ const AllDyeingOrders = () => {
                 p-1 border-2 border-dashed rounded-xl cursor-pointer
                 border-blue-400 bg-blue-50 hover:bg-blue-100 text-center transition"
                                         >
-                                            <span className="text-blue-700 font-medium">Upload Challans</span>
+                                            {
+                                                order.orderNo === orderNumber ? (
+                                                    <span className="text-blue-700 font-medium">{images?.length > 0 ? `Upload ${images?.length} Images` : 'Select Multiple Images'}</span>
+                                                ) : (
+                                                    <span className="text-blue-500">Upload Challan</span>
+                                                )
+                                            }
                                         </label>
 
                                         <input
                                             id="multiImageInput"
                                             type="file"
                                             multiple
+                                            onClick={() =>handleChallanImageUpload(order.orderNo)}
                                             accept="image/*"
                                             className="hidden mb-10"
                                             onChange={handleFileChange}
                                         />
                                         <div>
-                                            {images.length > 0 && (
+                                            { order.orderNo === orderNumber && images.length > 0 && (
                                                 <button
-                                                    onClick={uploadImages}
+                                                    onClick={() => uploadImages(order.orderNo)}
                                                     className=" bg-blue-600 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-700 transition"
                                                 >
-                                                    Upload
+                                                    {isLoading ? 'Uploading...' : 'Upload'}
                                                 </button>
                                             )}
                                         </div>
@@ -187,17 +201,6 @@ const AllDyeingOrders = () => {
                                                 </div>
                                             </div>
 
-
-                                            <div className="flex flex-col items-end w-56">
-
-
-
-
-
-
-
-                                            </div>
-
                                         </div>
 
 
@@ -211,7 +214,7 @@ const AllDyeingOrders = () => {
                                         <div className="grid border-b p-2 bg-opacity-20  gap-3 mb-2">
                                             {
                                                 order.orderedYarns.map((yarn, index) =>
-                                                    <div className="bg-red-500 text-red-500 items-center rounded-md grid grid-cols-2 bg-opacity-20">
+                                                    <div className="bg-gray-500 text-gray-500 items-center rounded-md grid grid-cols-2 bg-opacity-10">
                                                         <span key={index} className=" p-1">Yarn Type: {yarn.yarnTypes} </span>
                                                         <span>Order qty: {yarn.orderedYarnQty} LBS</span>
                                                     </div>

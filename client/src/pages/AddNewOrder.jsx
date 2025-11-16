@@ -1,22 +1,35 @@
+import { useState } from "react";
 import Header from "../Components/Reusable/Header";
 import usePostRequest from "../hooks/Post.request";
 
 const AddNewOrder = () => {
     const { makePostRequest } = usePostRequest();
+    const [isLoading, setIsLoading] = useState(false);
     const handleCreateNewDyeingOrder = async (e) => {
+        setIsLoading(true);
         e.preventDefault();
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries());
         console.log(data);
-        const insert = await makePostRequest('/neworder', data)
-        console.log(insert, "headshot");
+        await makePostRequest('/neworder', data)
+            .then(res => {
+                console.log(res);
+                setIsLoading(false);                
+                e.target.reset();
+            })
+            .catch(err => {
+                console.log(err);
+                alert('Failed to create new dyeing order');
+                setIsLoading(false);
+            })
+
     }
     return (
         <div className="w-full">
 
             <Header typeOfHeader={'Add New Dyeing Order'} />
 
-            <form onSubmit={handleCreateNewDyeingOrder}>
+            <form className="mt-20" onSubmit={handleCreateNewDyeingOrder}>
                 <div className="grid ml-3">
                     <div className="grid grid-cols-2 gap-1 mb-3">
                         <div className="grid">
@@ -63,7 +76,7 @@ const AddNewOrder = () => {
                 </div>
                 <div className="grid grid-cols-2  ml-3 mt-4 gap-2">
                     <button className="border-red-300 rounded-md border p-3 bg-red-500 bg-opacity-20 text-red-500">Cancel</button>
-                    <button className="border-blue-300 w-[98%] rounded-md border p-3 bg-blue-500 bg-opacity-20 text-blue-500">Submit</button>
+                    <button className={`border-blue-300 w-[98%] ${isLoading ? 'disabled:* cursor-not-allowed' : ''} rounded-md border p-3 bg-blue-500 bg-opacity-20 text-blue-500`}>{isLoading ? 'Uploading': 'Submit'}</button>
                 </div>
             </form>
 
