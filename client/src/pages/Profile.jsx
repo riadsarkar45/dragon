@@ -14,7 +14,7 @@ const Profile = () => {
     return (
         <div>
             <Header typeOfHeader={'Profile'}></Header>
-            <form onSubmit={handleCreateNewProfile}>
+            <form className="mt-16" onSubmit={handleCreateNewProfile}>
                 <div className="flex gap-2 justify-between w-[60rem] m-auto">
                     <div className=" w-[30rem] mb-5">
                         <div className="mb-2">

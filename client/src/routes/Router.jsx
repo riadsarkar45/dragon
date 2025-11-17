@@ -8,6 +8,7 @@ import RawReport from "../pages/RawReport";
 import Profile from "../pages/Profile";
 import Login from "../pages/Login";
 import NewYarnShipped from "../pages/NewYarnShipped";
+import MarketingWiseReport from "../pages/MarketingWiseReport";
 const Router = createBrowserRouter(
     [
         {
@@ -38,6 +39,10 @@ const Router = createBrowserRouter(
                 {
                     path: '/newshipped',
                     element: <NewYarnShipped />
+                },
+                {
+                    path: "/marketing",
+                    element: <MarketingWiseReport />
                 }
             ]
         },
