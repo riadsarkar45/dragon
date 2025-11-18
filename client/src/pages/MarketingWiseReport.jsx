@@ -1,7 +1,19 @@
-import React from 'react';
+import { useEffect } from 'react';
 import Header from '../Components/Reusable/Header';
+import useFetchRequest from '../hooks/Fetch.requiest';
 
 const MarketingWiseReport = () => {
+
+    const { get, fetchedData } = useFetchRequest();
+
+    useEffect(() => {
+        get("/report")
+
+    }, [get])
+
+    console.log(fetchedData?.data?.sectionWiseReport);
+
+
     return (
         <div>
             <div className='mb-20'>
@@ -9,7 +21,7 @@ const MarketingWiseReport = () => {
             </div>
 
 
-            <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+            <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs bg-white rounded-base border border-default">
                 <table class="w-full text-sm text-left rtl:text-right text-body">
                     <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
                         <tr>
@@ -19,69 +31,42 @@ const MarketingWiseReport = () => {
                             <th scope="col" class="px-6 py-3 font-medium">
                                 Marketing Name
                             </th>
+                            {/* <th scope="col" class="px-6 py-3 font-medium">
+                                Section
+                            </th> */}
                             <th scope="col" class="px-6 py-3 font-medium">
-                                Category
+                                Yarn Type
                             </th>
                             <th scope="col" class="px-6 py-3 font-medium">
-                                Price
-                            </th>
-                            <th scope="col" class="px-6 py-3 font-medium">
-                                Stock
+                                Qty
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-neutral-primary border-b border-default">
-                            <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                                Apple MacBook Pro 17"
-                            </th>
-                            <td class="px-6 py-4">
-                                Silver
-                            </td>
-                            <td class="px-6 py-4">
-                                Laptop
-                            </td>
-                            <td class="px-6 py-4">
-                                $2999
-                            </td>
-                            <td class="px-6 py-4">
-                                231
-                            </td>
-                        </tr>
-                        <tr class="bg-neutral-primary border-b border-default">
-                            <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                                Microsoft Surface Pro
-                            </th>
-                            <td class="px-6 py-4">
-                                White
-                            </td>
-                            <td class="px-6 py-4">
-                                Laptop PC
-                            </td>
-                            <td class="px-6 py-4">
-                                $1999
-                            </td>
-                            <td class="px-6 py-4">
-                                423
-                            </td>
-                        </tr>
-                        <tr class="bg-neutral-primary">
-                            <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                                Magic Mouse 2
-                            </th>
-                            <td class="px-6 py-4">
-                                Black
-                            </td>
-                            <td class="px-6 py-4">
-                                Accessories
-                            </td>
-                            <td class="px-6 py-4">
-                                $99
-                            </td>
-                            <td class="px-6 py-4">
-                                121
-                            </td>
-                        </tr>
+                        {
+                            fetchedData?.data?.sectionWiseReport?.length > 0 ? (
+                                fetchedData.data.sectionWiseReport.map((item, index) => (
+                                    <tr key={index} className=" border-b border-default">
+                                        <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap">
+                                            {index + 1}
+                                        </th>
+                                        <td className="px-6 py-4">
+                                            {item.marketingName}
+                                        </td>
+                                        {/* <td className="px-6 py-4 uppercase">
+                                            {item.dyeingSection}
+                                        </td> */}
+                                        <td className="px-6 py-4">
+                                            {item.yarnType}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {item.totalLbs}
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : null
+                        }
+
                     </tbody>
                 </table>
             </div>
