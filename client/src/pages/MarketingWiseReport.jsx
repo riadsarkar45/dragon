@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Header from '../Components/Reusable/Header';
 import useFetchRequest from '../hooks/Fetch.requiest';
+import usePostRequest from '../hooks/Post.request';
 
 const MarketingWiseReport = () => {
 
     const { get, fetchedData } = useFetchRequest();
+    const { makePutRequest } = usePostRequest();
 
     const [openModal, setOpenModal] = useState(false);
     const [selectedYarns, setSelectedYarns] = useState([]);
@@ -20,6 +22,15 @@ const MarketingWiseReport = () => {
     };
     const handleShowFactoryWise = (type) => {
         setShowShowFactoryWise(type)
+    }
+
+    const handleSampleAdjust = async (ordYid) => {
+        await makePutRequest(`/sample-adjust/${ordYid}`, { ordYid })
+            .then(() => {
+                get("/report")
+            }).catch(e => {
+                console.log(e);
+            })
     }
     return (
         <div>
@@ -83,27 +94,48 @@ const MarketingWiseReport = () => {
 
             {
                 showFactoryWise && (
-                    <div className='bg-white shadow-sm border mt-6 p-2'>
-                        <h2>Factory Wise</h2>
+                    <div className='bg-white shadow-sm border p-2'>
+                        <h2 className='p-2'>Factory Wise</h2>
                         {
                             fetchedData?.factoryReport.map((fr, i) => {
                                 const factoryTotal = fr.orderedYarns.reduce((sum, ordY) =>
                                     sum + (Number(ordY.qty) || 0), 0
                                 );
 
+                                const factoryTotalValue = fr.orderedYarns.reduce((sum, ordY) =>
+                                    sum + ((Number(ordY.qty) || 0) * (Number(ordY.unitPrice) || 0)),
+                                    0);
+
+                                const adjustedTotalValue = fr.orderedYarns
+                                    .filter(y => y.status === 'ADJUSTED')
+                                    .reduce((sum, y) => sum + (Number(y.qty) * Number(y.unitPrice)), 0);
+
+                                const notAdjustedTotalValue = fr.orderedYarns
+                                    .filter(y => y.status === 'NOT ADJUSTED')
+                                    .reduce((sum, y) => sum + (Number(y.qty) * Number(y.unitPrice)), 0);
+
                                 return (
                                     <div key={i} className='mb-4'>
                                         <h2 className='border-b p-2 bg-blue-500 bg-opacity-15 font-extrabold text-blue-500 border-blue-500'>
-                                            #{i + 1} Factory Name: {fr.factoryName} | Total Qty: {factoryTotal} LBS
+                                            #{i + 1} Factory Name: {fr.factoryName} |
+                                            Total Qty: {factoryTotal} LBS
+                                            | Total Value: $ {factoryTotalValue}
+                                            | Total Adjust Value: {adjustedTotalValue}
+                                            | Total Adjust Balance Value: {notAdjustedTotalValue}
                                         </h2>
                                         {
                                             fr.orderedYarns.map((ordY, j) =>
-                                                <div key={j} className='grid grid-cols-5 border-b p-2'>
+                                                <div key={j} className={`${ordY.status === 'NOT ADJUSTED' ? 'bg-red-500 bg-opacity-10 grid-cols-8 border-b-red-200 border-b' : 'bg-blue-500 bg-opacity-10 border-b-blue-200 border-b'} grid grid-cols-7  p-2`}>
                                                     <h2 className='uppercase'>{ordY.orderNo}</h2>
                                                     <h2>Merchent: {ordY.merchentName}</h2>
                                                     <h2>Yarn: {ordY.yarn}</h2>
+                                                    <h2>Price: {ordY.unitPrice || 0}</h2>
                                                     <h2>Qty: {ordY.qty}</h2>
+                                                    <h2>Total Value: <span className='font-bold'>${ordY.qty * ordY.unitPrice}</span></h2>
                                                     <h2>Marketing: {ordY.marketingName}</h2>
+                                                    {
+                                                        ordY.status === 'NOT ADJUSTED' && <button onClick={() => handleSampleAdjust(ordY.id)} className='bg-red-500 bg bg-opacity-10 text-red-500 rounded-md border border-red-500'>Adjust</button>
+                                                    }
                                                 </div>
                                             )
                                         }

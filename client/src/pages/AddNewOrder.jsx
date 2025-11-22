@@ -14,8 +14,8 @@ const AddNewOrder = () => {
         await makePostRequest('/neworder', data)
             .then(res => {
                 console.log(res);
-                setIsLoading(false);                
-                e.target.reset();
+                setIsLoading(false);
+                // e.target.reset();
             })
             .catch(err => {
                 console.log(err);
@@ -53,9 +53,15 @@ const AddNewOrder = () => {
                         </div>
                     </div>
 
-                    <div className="grid mb-2">
-                        <small>Marketing Name</small>
-                        <input name="marketingName" className="w-[99%] p-3 outline-none border rounded-md mt-1" type="text" placeholder="Marketing Name" />
+                    <div className="grid grid-cols-2 gap-1 mb-2">
+                        <div>
+                            <small>Marketing Name</small>
+                            <input name="marketingName" className="w-full p-3 outline-none border rounded-md mt-1" type="text" placeholder="Marketing Name" />
+                        </div>
+                        <div>
+                            <small>Unit Price</small>
+                            <input name="unitPrice" className="w-full p-3 outline-none border rounded-md mt-1" type="text" placeholder="Unit Price" />
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-1 mb-2">
@@ -76,7 +82,7 @@ const AddNewOrder = () => {
                 </div>
                 <div className="grid grid-cols-2  ml-3 mt-4 gap-2">
                     <button className="border-red-300 rounded-md border p-3 bg-red-500 bg-opacity-20 text-red-500">Cancel</button>
-                    <button className={`border-blue-300 w-[98%] ${isLoading ? 'disabled:* cursor-not-allowed' : ''} rounded-md border p-3 bg-blue-500 bg-opacity-20 text-blue-500`}>{isLoading ? 'Uploading': 'Submit'}</button>
+                    <button className={`border-blue-300 w-[98%] ${isLoading ? 'disabled:* cursor-not-allowed' : ''} rounded-md border p-3 bg-blue-500 bg-opacity-20 text-blue-500`}>{isLoading ? 'Uploading' : 'Submit'}</button>
                 </div>
             </form>
 
