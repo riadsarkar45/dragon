@@ -9,6 +9,7 @@ import Profile from "../pages/Profile";
 import Login from "../pages/Login";
 import NewYarnShipped from "../pages/NewYarnShipped";
 import MarketingWiseReport from "../pages/MarketingWiseReport";
+import GeneratePI from "../pages/GeneratePI";
 const Router = createBrowserRouter(
     [
         {
@@ -43,6 +44,10 @@ const Router = createBrowserRouter(
                 {
                     path: "/marketing",
                     element: <MarketingWiseReport />
+                },
+                {
+                    path: "/generate-pi",
+                    element: <GeneratePI />
                 }
             ]
         },

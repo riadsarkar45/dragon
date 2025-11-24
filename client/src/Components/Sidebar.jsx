@@ -8,6 +8,7 @@ const Sidebar = () => {
     { name: "Add New Dyeing Order", path: "/neworder" },
     { name: "Marketing Report", path: "/marketing" },
     { name: "Raw Report", path: "/rawreport" },
+    { name: "Generate PI", path: "/generate-pi" },
     { name: "Add New Shipped Yarns", path: "/newshipped" },
     { name: "Login", path: "/login" },
   ];
