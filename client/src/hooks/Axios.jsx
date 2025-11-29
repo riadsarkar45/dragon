@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const axiosPublic = axios.create({
-  baseURL: "http://localhost:2000",
+  // baseURL: "http://localhost:2000",
+  baseURL: "https://dragon-server-17.onrender.com",
   withCredentials: true,
 });
 const useAxiosPublic = () => {
